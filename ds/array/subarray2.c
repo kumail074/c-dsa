@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// it has time complexity of O(n^2) and Auxiliary Space of O(1)
+//it has time complexity of O(n) and auxiliary space of O(1)
 
 int findSplitPoint(int *arr, int n) {
     int leftSum = 0;
-    
-    for(int i=0; i<n; i++) {
+    for(int i=0; i<n; i++)
         leftSum += arr[i];
 
-        int rightSum = 0;
-        for(int j=i+1; j<n; j++) {
-            rightSum += arr[j];
-        }
+    int rightSum = 0;
+    for(int i=n-1; i>=0; i--) {
+        rightSum += arr[i];
+        leftSum -= arr[i];
 
-        if(leftSum == rightSum)
-            return i+1;
+        if(rightSum == leftSum) 
+            return i;
     }
     return -1;
 }
@@ -23,7 +22,7 @@ int findSplitPoint(int *arr, int n) {
 void printTwoParts(int *arr, int n) {
     int splitPoint = findSplitPoint(arr, n);
     if(splitPoint == -1 || splitPoint == n) {
-        printf("Not possible\n");
+        printf("Not Possible\n");
         exit(EXIT_FAILURE);
     }
     for(int i=0; i<n; i++) {
@@ -31,7 +30,7 @@ void printTwoParts(int *arr, int n) {
             printf("\n");
         printf("%d ", arr[i]);
     }
-    putchar('\n');
+    printf("\n");
 }
 
 int main() {
